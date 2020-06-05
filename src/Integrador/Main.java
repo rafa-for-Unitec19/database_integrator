@@ -72,6 +72,8 @@ public class Main extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         btn_RegresarS = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        txtA_Consola = new javax.swing.JTextArea();
         jTextField1 = new javax.swing.JTextField();
         lbl_Titulo = new javax.swing.JLabel();
         mb_Menu = new javax.swing.JMenuBar();
@@ -177,9 +179,7 @@ public class Main extends javax.swing.JFrame {
                                         .addComponent(txt_NombreInstacniaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(txt_NombreBDDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jd_ConexionLayout.createSequentialGroup()
-                                .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1)
-                                    .addComponent(jLabel13))
+                                .addComponent(jLabel13)
                                 .addGap(238, 238, 238))))
                     .addGroup(jd_ConexionLayout.createSequentialGroup()
                         .addGap(371, 371, 371)
@@ -187,6 +187,10 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btn_ProbarDestino)))
                 .addContainerGap(129, Short.MAX_VALUE))
+            .addGroup(jd_ConexionLayout.createSequentialGroup()
+                .addGap(393, 393, 393)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jd_ConexionLayout.setVerticalGroup(
             jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -256,6 +260,7 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap(14, Short.MAX_VALUE))
         );
 
+        jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         jLabel8.setText("Sincronizacion de Tablas");
 
         lst_Replicar.setModel(new DefaultListModel());
@@ -283,40 +288,48 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        txtA_Consola.setColumns(20);
+        txtA_Consola.setFont(new java.awt.Font("Consolas", 0, 12)); // NOI18N
+        txtA_Consola.setRows(5);
+        jScrollPane3.setViewportView(txtA_Consola);
+
         javax.swing.GroupLayout jd_IntegracionLayout = new javax.swing.GroupLayout(jd_Integracion.getContentPane());
         jd_Integracion.getContentPane().setLayout(jd_IntegracionLayout);
         jd_IntegracionLayout.setHorizontalGroup(
             jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                        .addGap(205, 205, 205)
-                        .addComponent(jLabel8))
-                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                        .addGap(141, 141, 141)
-                        .addComponent(btn_GuardarSincronizacion)
-                        .addGap(102, 102, 102)
-                        .addComponent(btn_Cancelar)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(86, 86, 86)
-                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btn_AgregarTablaNOReplica)
-                            .addComponent(btn_AgregarTablaRepliaca)))
-                    .addComponent(jLabel9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel10))
-                .addGap(50, 50, 50))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_IntegracionLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_RegresarS)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_IntegracionLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(86, 86, 86)
+                                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btn_AgregarTablaNOReplica)
+                                    .addComponent(btn_AgregarTablaRepliaca)))
+                            .addComponent(jLabel9))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel10))))
+                .addGap(50, 50, 50))
+            .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                        .addGap(205, 205, 205)
+                        .addComponent(btn_GuardarSincronizacion)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_Cancelar))
+                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                        .addGap(185, 185, 185)
+                        .addComponent(jLabel8)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jd_IntegracionLayout.setVerticalGroup(
             jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -328,9 +341,9 @@ public class Main extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                        .addGap(27, 27, 27)
+                        .addGap(34, 34, 34)
                         .addComponent(jLabel8)
-                        .addGap(123, 123, 123)
+                        .addGap(116, 116, 116)
                         .addComponent(btn_AgregarTablaRepliaca)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_AgregarTablaNOReplica))
@@ -339,11 +352,13 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel10)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 242, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 43, Short.MAX_VALUE)
-                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_GuardarSincronizacion)
-                    .addComponent(btn_Cancelar))
-                .addGap(5, 5, 5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 24, Short.MAX_VALUE)
+                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_Cancelar, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btn_GuardarSincronizacion, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btn_RegresarS)
                 .addContainerGap())
         );
@@ -494,6 +509,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jd_Conexion;
     private javax.swing.JDialog jd_Integracion;
@@ -503,6 +519,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenuBar mb_Menu;
     private javax.swing.JMenu mi_Integrador;
     private javax.swing.JMenu mi_Salida;
+    private javax.swing.JTextArea txtA_Consola;
     private javax.swing.JTextField txt_ContraseniaDestino;
     private javax.swing.JTextField txt_ContraseniaOrigen;
     private javax.swing.JTextField txt_NombreBDDestino;
