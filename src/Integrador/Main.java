@@ -7,6 +7,7 @@ package Integrador;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -112,8 +113,18 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_ProbarOrigen.setText("Probar");
+        btn_ProbarOrigen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ProbarOrigenActionPerformed(evt);
+            }
+        });
 
         btn_ProbarDestino.setText("Probar");
+        btn_ProbarDestino.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_ProbarDestinoActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Destino");
 
@@ -250,7 +261,7 @@ public class Main extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(txt_ContraseniaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(26, 26, 26)
-                .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_ProbarOrigen)
                     .addComponent(btn_ProbarDestino))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -274,6 +285,11 @@ public class Main extends javax.swing.JFrame {
         btn_AgregarTablaRepliaca.setText(">>");
 
         btn_GuardarSincronizacion.setText("Guardar");
+        btn_GuardarSincronizacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_GuardarSincronizacionActionPerformed(evt);
+            }
+        });
 
         btn_Cancelar.setText("Cancelar");
 
@@ -444,6 +460,36 @@ public class Main extends javax.swing.JFrame {
         jd_Integracion.dispose();
         jd_Conexion.setVisible(true);
     }//GEN-LAST:event_btn_RegresarSMouseClicked
+
+    private void btn_GuardarSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarSincronizacionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_GuardarSincronizacionActionPerformed
+
+    private void btn_ProbarOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProbarOrigenActionPerformed
+        //VALIDAR CAMPOS VACIOS
+        try {
+            if (txtx_NombreInstanciaOrigen.getText().length() > 0 && txt_NombreBDOrigen.getText().length() > 0 && txt_PuertoOrigen.getText().length() > 0
+                && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0  ) {
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Faltan datos");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_ProbarOrigenActionPerformed
+
+    private void btn_ProbarDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProbarDestinoActionPerformed
+        // VALIDAR CAMPOS VACIOS A DESTINATARIO
+        try {
+            if (txt_NombreInstacniaDestino.getText().length() > 0 && txt_NombreBDDestino.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
+                   && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0 ) {
+                
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan datos");
+            }                
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_ProbarDestinoActionPerformed
 
     /**
      * @param args the command line arguments
