@@ -298,6 +298,11 @@ public class Main extends javax.swing.JFrame {
         jScrollPane1.setViewportView(lst_Replicar);
 
         lst_NoReplicar.setModel(new DefaultListModel());
+        lst_NoReplicar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lst_NoReplicarMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(lst_NoReplicar);
 
         btn_AgregarTablaNOReplica.setText("<<");
@@ -511,6 +516,11 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_ProbarDestinoActionPerformed
+
+    private void lst_NoReplicarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lst_NoReplicarMouseClicked
+        // CLICKEAR Y SELECCIONAR1
+        
+    }//GEN-LAST:event_lst_NoReplicarMouseClicked
 
     /**
      * @param args the command line arguments
