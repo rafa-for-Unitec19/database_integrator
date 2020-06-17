@@ -295,6 +295,11 @@ public class Main extends javax.swing.JFrame {
         jLabel8.setText("Sincronizacion de Tablas");
 
         lst_Replicar.setModel(new DefaultListModel());
+        lst_Replicar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lst_ReplicarMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(lst_Replicar);
 
         lst_NoReplicar.setModel(new DefaultListModel());
@@ -494,10 +499,10 @@ public class Main extends javax.swing.JFrame {
         //VALIDAR CAMPOS VACIOS
         try {
             if (txtx_NombreInstanciaOrigen.getText().length() > 0 && txt_NombreBDOrigen.getText().length() > 0 && txt_PuertoOrigen.getText().length() > 0
-                && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0  ) {
+                    && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0) {
                 ConOrigen.setIsPrueba(true);
                 ConOrigen.crearConexion();
-            }else{
+            } else {
                 JOptionPane.showMessageDialog(null, "Faltan datos");
             }
         } catch (Exception e) {
@@ -508,19 +513,30 @@ public class Main extends javax.swing.JFrame {
         // VALIDAR CAMPOS VACIOS A DESTINATARIO
         try {
             if (txt_NombreInstacniaDestino.getText().length() > 0 && txt_NombreBDDestino.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
-                   && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0 ) {
-                
+                    && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0) {
+
             } else {
                 JOptionPane.showMessageDialog(null, "Faltan datos");
-            }                
+            }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_ProbarDestinoActionPerformed
 
     private void lst_NoReplicarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lst_NoReplicarMouseClicked
         // CLICKEAR Y SELECCIONAR1
-        
+        try {
+            seleccion1 = lst_NoReplicar.getSelectedIndex();
+        } catch (Exception e) {
+        }
     }//GEN-LAST:event_lst_NoReplicarMouseClicked
+
+    private void lst_ReplicarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lst_ReplicarMouseClicked
+        // CLICKEAR Y SELECCIONAR1
+        try {
+            seleccion2 = lst_Replicar.getSelectedIndex();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_lst_ReplicarMouseClicked
 
     /**
      * @param args the command line arguments
@@ -611,4 +627,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtx_NombreInstanciaOrigen;
     // End of variables declaration//GEN-END:variables
     private PostgrDriver ConOrigen;
+    int seleccion1 = 0; //seleccion de no replicado
+    int seleccion2 = 0; //seleccion de replicado
+
+    DefaultListModel modelo_NoRep = new DefaultListModel();
+    DefaultListModel modelo_Rep = new DefaultListModel();
 }
