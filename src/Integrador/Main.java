@@ -20,6 +20,7 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
     }
 
     /**
@@ -60,6 +61,8 @@ public class Main extends javax.swing.JFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        txt_BitConexion = new javax.swing.JTextArea();
         jd_Integracion = new javax.swing.JDialog();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -88,13 +91,23 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre Instancia");
 
+        txtx_NombreInstanciaOrigen.setText("database-1.ck0fj32e7uo3.us-east-1.rds.amazonaws.com ");
+
         jLabel4.setText("Nombre Bases de Datos");
+
+        txt_NombreBDOrigen.setText("HR");
 
         jLabel5.setText("Puerto");
 
+        txt_PuertoOrigen.setText("5432");
+
         jLabel6.setText("Usuario");
 
+        txt_UsuarioOrigen.setText("postPower");
+
         jLabel7.setText("Contrasenia");
+
+        txt_ContraseniaOrigen.setText("waySecure1");
 
         btn_GuardarConexion.setText("Guardar");
 
@@ -138,6 +151,10 @@ public class Main extends javax.swing.JFrame {
 
         jLabel18.setText("Contrasenia");
 
+        txt_BitConexion.setColumns(20);
+        txt_BitConexion.setRows(5);
+        jScrollPane4.setViewportView(txt_BitConexion);
+
         javax.swing.GroupLayout jd_ConexionLayout = new javax.swing.GroupLayout(jd_Conexion.getContentPane());
         jd_Conexion.getContentPane().setLayout(jd_ConexionLayout);
         jd_ConexionLayout.setHorizontalGroup(
@@ -145,16 +162,29 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jd_ConexionLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btn_Sincronizar)
-                .addGap(349, 349, 349)
+                .addGap(314, 314, 314)
                 .addComponent(btn_RegresarC)
                 .addGap(22, 22, 22))
             .addGroup(jd_ConexionLayout.createSequentialGroup()
+                .addGap(393, 393, 393)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jd_ConexionLayout.createSequentialGroup()
                 .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jd_ConexionLayout.createSequentialGroup()
-                        .addContainerGap(18, Short.MAX_VALUE)
+                        .addGap(371, 371, 371)
+                        .addComponent(btn_ProbarOrigen)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_ProbarDestino))
+                    .addGroup(jd_ConexionLayout.createSequentialGroup()
+                        .addContainerGap(43, Short.MAX_VALUE)
                         .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jd_ConexionLayout.createSequentialGroup()
                                 .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btn_GuardarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(jd_ConexionLayout.createSequentialGroup()
+                                        .addComponent(jLabel2)
+                                        .addGap(423, 423, 423))
                                     .addGroup(jd_ConexionLayout.createSequentialGroup()
                                         .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(jLabel6)
@@ -176,11 +206,7 @@ public class Main extends javax.swing.JFrame {
                                             .addComponent(jLabel18)
                                             .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(jLabel5)
-                                                .addComponent(jLabel17))))
-                                    .addComponent(btn_GuardarConexion, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(jd_ConexionLayout.createSequentialGroup()
-                                        .addComponent(jLabel2)
-                                        .addGap(423, 423, 423)))
+                                                .addComponent(jLabel17)))))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
@@ -191,22 +217,14 @@ public class Main extends javax.swing.JFrame {
                                     .addComponent(txt_NombreBDDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jd_ConexionLayout.createSequentialGroup()
                                 .addComponent(jLabel13)
-                                .addGap(238, 238, 238))))
-                    .addGroup(jd_ConexionLayout.createSequentialGroup()
-                        .addGap(371, 371, 371)
-                        .addComponent(btn_ProbarOrigen)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn_ProbarDestino)))
-                .addContainerGap(129, Short.MAX_VALUE))
-            .addGroup(jd_ConexionLayout.createSequentialGroup()
-                .addGap(393, 393, 393)
-                .addComponent(jLabel1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addGap(238, 238, 238))
+                            .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 877, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(91, Short.MAX_VALUE))
         );
         jd_ConexionLayout.setVerticalGroup(
             jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_ConexionLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(562, Short.MAX_VALUE)
                 .addComponent(btn_RegresarC)
                 .addGap(15, 15, 15))
             .addGroup(jd_ConexionLayout.createSequentialGroup()
@@ -264,11 +282,13 @@ public class Main extends javax.swing.JFrame {
                 .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btn_ProbarOrigen)
                     .addComponent(btn_ProbarDestino))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btn_GuardarConexion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
+                .addComponent(btn_GuardarConexion)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btn_Sincronizar)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(27, 27, 27))
         );
 
         jLabel8.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
@@ -470,7 +490,8 @@ public class Main extends javax.swing.JFrame {
         try {
             if (txtx_NombreInstanciaOrigen.getText().length() > 0 && txt_NombreBDOrigen.getText().length() > 0 && txt_PuertoOrigen.getText().length() > 0
                 && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0  ) {
-                
+                ConOrigen.setIsPrueba(true);
+                ConOrigen.crearConexion();
             }else{
                 JOptionPane.showMessageDialog(null, "Faltan datos");
             }
@@ -556,6 +577,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jd_Conexion;
     private javax.swing.JDialog jd_Integracion;
@@ -566,6 +588,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JMenu mi_Integrador;
     private javax.swing.JMenu mi_Salida;
     private javax.swing.JTextArea txtA_Consola;
+    private javax.swing.JTextArea txt_BitConexion;
     private javax.swing.JTextField txt_ContraseniaDestino;
     private javax.swing.JTextField txt_ContraseniaOrigen;
     private javax.swing.JTextField txt_NombreBDDestino;
@@ -577,4 +600,5 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txt_UsuarioOrigen;
     private javax.swing.JTextField txtx_NombreInstanciaOrigen;
     // End of variables declaration//GEN-END:variables
+    private PostgrDriver ConOrigen;
 }
