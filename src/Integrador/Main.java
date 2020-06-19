@@ -548,14 +548,21 @@ public class Main extends javax.swing.JFrame {
     private void btn_AgregarTablaRepliacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaRepliacaActionPerformed
         // NO REPLICAR -> REPLICAR
         try {
-            modelo_NoRep.remove(seleccion1);
+            if (lst_NoReplicar.getSelectedIndex() >= 0) {
+                modelo_Rep.addElement(modelo_NoRep.get(seleccion1));
+                modelo_NoRep.remove(seleccion1);
+            }
+
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_AgregarTablaRepliacaActionPerformed
 
     private void btn_AgregarTablaNOReplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaNOReplicaActionPerformed
         //  REPLICAR -> NO REPLICAR
-                try {
+        try {
+            if (rootPaneCheckingEnabled) {
+
+            }
             modelo_NoRep.remove(seleccion1);
         } catch (Exception e) {
         }
