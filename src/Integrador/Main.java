@@ -21,6 +21,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
+        modelo_NoRep.addElement("OLA");
+        lst_NoReplicar.setModel(modelo_NoRep);
     }
 
     /**
@@ -550,7 +552,9 @@ public class Main extends javax.swing.JFrame {
         try {
             if (lst_NoReplicar.getSelectedIndex() >= 0) {
                 modelo_Rep.addElement(modelo_NoRep.get(seleccion1));
+                lst_Replicar.setModel(modelo_Rep);
                 modelo_NoRep.remove(seleccion1);
+                
             }
 
         } catch (Exception e) {
@@ -560,10 +564,12 @@ public class Main extends javax.swing.JFrame {
     private void btn_AgregarTablaNOReplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaNOReplicaActionPerformed
         //  REPLICAR -> NO REPLICAR
         try {
-            if (rootPaneCheckingEnabled) {
-
+            if (lst_Replicar.getSelectedIndex() >= 0) {
+                modelo_NoRep.addElement(modelo_Rep.get(seleccion2));
+                lst_NoReplicar.setModel(modelo_NoRep);
+                modelo_Rep.remove(seleccion2);
+                
             }
-            modelo_NoRep.remove(seleccion1);
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_AgregarTablaNOReplicaActionPerformed
