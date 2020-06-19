@@ -311,8 +311,18 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2.setViewportView(lst_NoReplicar);
 
         btn_AgregarTablaNOReplica.setText("<<");
+        btn_AgregarTablaNOReplica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarTablaNOReplicaActionPerformed(evt);
+            }
+        });
 
         btn_AgregarTablaRepliaca.setText(">>");
+        btn_AgregarTablaRepliaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarTablaRepliacaActionPerformed(evt);
+            }
+        });
 
         btn_GuardarSincronizacion.setText("Guardar");
         btn_GuardarSincronizacion.addActionListener(new java.awt.event.ActionListener() {
@@ -537,6 +547,22 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_lst_ReplicarMouseClicked
+
+    private void btn_AgregarTablaRepliacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaRepliacaActionPerformed
+        // NO REPLICAR -> REPLICAR
+        try {
+            modelo_NoRep.remove(seleccion1);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_AgregarTablaRepliacaActionPerformed
+
+    private void btn_AgregarTablaNOReplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaNOReplicaActionPerformed
+        //  REPLICAR -> NO REPLICAR
+                try {
+            modelo_NoRep.remove(seleccion1);
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_AgregarTablaNOReplicaActionPerformed
 
     /**
      * @param args the command line arguments

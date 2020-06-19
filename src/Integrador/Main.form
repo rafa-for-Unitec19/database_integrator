@@ -482,11 +482,17 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="&lt;&lt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_AgregarTablaNOReplicaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_AgregarTablaRepliaca">
           <Properties>
             <Property name="text" type="java.lang.String" value="&gt;&gt;"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_AgregarTablaRepliacaActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JButton" name="btn_GuardarSincronizacion">
           <Properties>
