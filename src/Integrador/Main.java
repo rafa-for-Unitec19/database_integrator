@@ -78,7 +78,6 @@ public class Main extends javax.swing.JFrame {
         btn_RegresarS = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtA_Consola = new javax.swing.JTextArea();
-        jTextField1 = new javax.swing.JTextField();
         lbl_Titulo = new javax.swing.JLabel();
         mb_Menu = new javax.swing.JMenuBar();
         mi_Integrador = new javax.swing.JMenu();
@@ -419,8 +418,6 @@ public class Main extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        jTextField1.setText("jTextField1");
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Integrador de Bases de Datos");
         setLocation(new java.awt.Point(0, 0));
@@ -630,7 +627,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
-    private javax.swing.JTextField jTextField1;
     private javax.swing.JDialog jd_Conexion;
     private javax.swing.JDialog jd_Integracion;
     private javax.swing.JLabel lbl_Titulo;

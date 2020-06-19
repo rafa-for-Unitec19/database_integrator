@@ -545,11 +545,6 @@
         </Container>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JTextField" name="jTextField1">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jTextField1"/>
-      </Properties>
-    </Component>
     <Menu class="javax.swing.JMenuBar" name="mb_Menu">
       <SubComponents>
         <Menu class="javax.swing.JMenu" name="mi_Integrador">
