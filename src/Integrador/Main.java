@@ -5,6 +5,7 @@
  */
 package Integrador;
 
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -21,7 +22,14 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
-        modelo_NoRep.addElement("OLA");
+        modelo_NoRep.addElement("Countries");
+        modelo_NoRep.addElement("Departments");
+        modelo_NoRep.addElement("Employees");
+        modelo_NoRep.addElement("Job_history");
+        modelo_NoRep.addElement("Jobs");
+        modelo_NoRep.addElement("Locations");
+        modelo_NoRep.addElement("Regions");
+
         lst_NoReplicar.setModel(modelo_NoRep);
     }
 
@@ -333,6 +341,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_Cancelar.setText("Cancelar");
+        btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CancelarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Sin Replicar");
 
@@ -498,6 +511,19 @@ public class Main extends javax.swing.JFrame {
     private void btn_RegresarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_RegresarSMouseClicked
         jd_Integracion.dispose();
         jd_Conexion.setVisible(true);
+        // RETROCEDER VUELVE A ESTADO INICIAL
+        modelo_NoRep.removeAllElements();
+        modelo_Rep.removeAllElements();
+
+        modelo_NoRep.addElement("Countries");
+        modelo_NoRep.addElement("Departments");
+        modelo_NoRep.addElement("Employees");
+        modelo_NoRep.addElement("Job_history");
+        modelo_NoRep.addElement("Jobs");
+        modelo_NoRep.addElement("Locations");
+        modelo_NoRep.addElement("Regions");
+        lst_NoReplicar.setModel(modelo_NoRep);
+        lst_Replicar.setModel(modelo_Rep);
     }//GEN-LAST:event_btn_RegresarSMouseClicked
 
     private void btn_GuardarSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarSincronizacionActionPerformed
@@ -554,7 +580,7 @@ public class Main extends javax.swing.JFrame {
                 modelo_Rep.addElement(modelo_NoRep.get(seleccion1));
                 lst_Replicar.setModel(modelo_Rep);
                 modelo_NoRep.remove(seleccion1);
-                
+
             }
 
         } catch (Exception e) {
@@ -568,11 +594,27 @@ public class Main extends javax.swing.JFrame {
                 modelo_NoRep.addElement(modelo_Rep.get(seleccion2));
                 lst_NoReplicar.setModel(modelo_NoRep);
                 modelo_Rep.remove(seleccion2);
-                
+
             }
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_AgregarTablaNOReplicaActionPerformed
+
+    private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
+        // CANCELAR VUELVE A ESTADO INICIAL
+        modelo_NoRep.removeAllElements();
+        modelo_Rep.removeAllElements();
+
+        modelo_NoRep.addElement("Countries");
+        modelo_NoRep.addElement("Departments");
+        modelo_NoRep.addElement("Employees");
+        modelo_NoRep.addElement("Job_history");
+        modelo_NoRep.addElement("Jobs");
+        modelo_NoRep.addElement("Locations");
+        modelo_NoRep.addElement("Regions");
+        lst_NoReplicar.setModel(modelo_NoRep);
+        lst_Replicar.setModel(modelo_Rep);
+    }//GEN-LAST:event_btn_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -667,4 +709,10 @@ public class Main extends javax.swing.JFrame {
 
     DefaultListModel modelo_NoRep = new DefaultListModel();
     DefaultListModel modelo_Rep = new DefaultListModel();
+
+    public String CadenaReplicados() {
+        String cadena = "";
+
+        return cadena;
+    }
 }
