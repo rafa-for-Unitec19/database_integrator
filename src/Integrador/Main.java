@@ -21,6 +21,8 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
+        modelo_NoRep.addElement("OLA");
+        lst_NoReplicar.setModel(modelo_NoRep);
     }
 
     /**
@@ -310,8 +312,18 @@ public class Main extends javax.swing.JFrame {
         jScrollPane2.setViewportView(lst_NoReplicar);
 
         btn_AgregarTablaNOReplica.setText("<<");
+        btn_AgregarTablaNOReplica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarTablaNOReplicaActionPerformed(evt);
+            }
+        });
 
         btn_AgregarTablaRepliaca.setText(">>");
+        btn_AgregarTablaRepliaca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_AgregarTablaRepliacaActionPerformed(evt);
+            }
+        });
 
         btn_GuardarSincronizacion.setText("Guardar");
         btn_GuardarSincronizacion.addActionListener(new java.awt.event.ActionListener() {
@@ -534,6 +546,33 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_lst_ReplicarMouseClicked
+
+    private void btn_AgregarTablaRepliacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaRepliacaActionPerformed
+        // NO REPLICAR -> REPLICAR
+        try {
+            if (lst_NoReplicar.getSelectedIndex() >= 0) {
+                modelo_Rep.addElement(modelo_NoRep.get(seleccion1));
+                lst_Replicar.setModel(modelo_Rep);
+                modelo_NoRep.remove(seleccion1);
+                
+            }
+
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_AgregarTablaRepliacaActionPerformed
+
+    private void btn_AgregarTablaNOReplicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_AgregarTablaNOReplicaActionPerformed
+        //  REPLICAR -> NO REPLICAR
+        try {
+            if (lst_Replicar.getSelectedIndex() >= 0) {
+                modelo_NoRep.addElement(modelo_Rep.get(seleccion2));
+                lst_NoReplicar.setModel(modelo_NoRep);
+                modelo_Rep.remove(seleccion2);
+                
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_AgregarTablaNOReplicaActionPerformed
 
     /**
      * @param args the command line arguments
