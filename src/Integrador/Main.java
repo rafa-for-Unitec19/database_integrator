@@ -341,6 +341,11 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_Cancelar.setText("Cancelar");
+        btn_Cancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_CancelarActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Sin Replicar");
 
@@ -506,6 +511,19 @@ public class Main extends javax.swing.JFrame {
     private void btn_RegresarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_RegresarSMouseClicked
         jd_Integracion.dispose();
         jd_Conexion.setVisible(true);
+        // RETROCEDER VUELVE A ESTADO INICIAL
+        modelo_NoRep.removeAllElements();
+        modelo_Rep.removeAllElements();
+
+        modelo_NoRep.addElement("Countries");
+        modelo_NoRep.addElement("Departments");
+        modelo_NoRep.addElement("Employees");
+        modelo_NoRep.addElement("Job_history");
+        modelo_NoRep.addElement("Jobs");
+        modelo_NoRep.addElement("Locations");
+        modelo_NoRep.addElement("Regions");
+        lst_NoReplicar.setModel(modelo_NoRep);
+        lst_Replicar.setModel(modelo_Rep);
     }//GEN-LAST:event_btn_RegresarSMouseClicked
 
     private void btn_GuardarSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarSincronizacionActionPerformed
@@ -581,6 +599,22 @@ public class Main extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_AgregarTablaNOReplicaActionPerformed
+
+    private void btn_CancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_CancelarActionPerformed
+        // CANCELAR VUELVE A ESTADO INICIAL
+        modelo_NoRep.removeAllElements();
+        modelo_Rep.removeAllElements();
+
+        modelo_NoRep.addElement("Countries");
+        modelo_NoRep.addElement("Departments");
+        modelo_NoRep.addElement("Employees");
+        modelo_NoRep.addElement("Job_history");
+        modelo_NoRep.addElement("Jobs");
+        modelo_NoRep.addElement("Locations");
+        modelo_NoRep.addElement("Regions");
+        lst_NoReplicar.setModel(modelo_NoRep);
+        lst_Replicar.setModel(modelo_Rep);
+    }//GEN-LAST:event_btn_CancelarActionPerformed
 
     /**
      * @param args the command line arguments
