@@ -5,6 +5,7 @@
  */
 package Integrador;
 
+import java.util.ArrayList;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -21,7 +22,14 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
-        modelo_NoRep.addElement("OLA");
+        modelo_NoRep.addElement("Countries");
+        modelo_NoRep.addElement("Departments");
+        modelo_NoRep.addElement("Employees");
+        modelo_NoRep.addElement("Job_history");
+        modelo_NoRep.addElement("Jobs");
+        modelo_NoRep.addElement("Locations");
+        modelo_NoRep.addElement("Regions");
+
         lst_NoReplicar.setModel(modelo_NoRep);
     }
 
@@ -554,7 +562,7 @@ public class Main extends javax.swing.JFrame {
                 modelo_Rep.addElement(modelo_NoRep.get(seleccion1));
                 lst_Replicar.setModel(modelo_Rep);
                 modelo_NoRep.remove(seleccion1);
-                
+
             }
 
         } catch (Exception e) {
@@ -568,7 +576,7 @@ public class Main extends javax.swing.JFrame {
                 modelo_NoRep.addElement(modelo_Rep.get(seleccion2));
                 lst_NoReplicar.setModel(modelo_NoRep);
                 modelo_Rep.remove(seleccion2);
-                
+
             }
         } catch (Exception e) {
         }
@@ -667,4 +675,10 @@ public class Main extends javax.swing.JFrame {
 
     DefaultListModel modelo_NoRep = new DefaultListModel();
     DefaultListModel modelo_Rep = new DefaultListModel();
+
+    public String CadenaReplicados() {
+        String cadena = "";
+
+        return cadena;
+    }
 }
