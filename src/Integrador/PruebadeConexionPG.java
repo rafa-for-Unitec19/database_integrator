@@ -27,25 +27,63 @@ public class PruebadeConexionPG {
         
         String refDate = "2020-06-18 19:28:22.767";
         
-        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://database-1.ck0fj32e7uo3.us-east-1.rds.amazonaws.com:5432/HR", "postPower", "waySecure1")) {
+//        PostgreSQL Driver
+//        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://database-1.ck0fj32e7uo3.us-east-1.rds.amazonaws.com:5432/HR", "postPower", "waySecure1")) {
+// 
+//            System.out.println("Java JDBC PostgreSQL Example");
+//            // When this class first attempts to establish a connection, it automatically loads any JDBC 4.0 drivers found within 
+//            // the class path. Note that your application must manually load any JDBC drivers prior to version 4.0.
+////          Class.forName("org.postgresql.Driver"); 
+// 
+//            System.out.println("Connected to PostgreSQL database!");
+//            Statement statement = connection.createStatement();
+//            System.out.println("Reading log records...");
+//            System.out.printf("%-30.30s  %-30.30s%n", "Tabla", "Operacion");
+//            String query = "SELECT * FROM audit.bitacora where fecha_hora >= '" + refDate + "'";
+//            ResultSet resultSet = statement.executeQuery(query);
+//            
+//            
+//            //Verificador de Sincornizacion
+//            if (resultSet.next()) {
+//                do {
+//                System.out.printf("%-30.30s  %-70.30s%n", resultSet.getString("tabla"), resultSet.getString("operacion"));
+//                }while (resultSet.next());
+//            }else{
+//                System.out.println("Las Tablas estan sincronizadas");
+//            }
+//            
+//            
+//            
+//            
+// 
+//        } /*catch (ClassNotFoundException e) {
+//            System.out.println("PostgreSQL JDBC driver not found.");
+//            e.printStackTrace();
+//        }*/ catch (SQLException e) {
+//            System.out.println("Connection failure.");
+//            e.printStackTrace();
+//        }
+        
+//      Oracle Driver  
+        try (Connection connection = DriverManager.getConnection("jdbc:oracle:thin:@//tbb2.c71kpjw2tb2c.us-east-1.rds.amazonaws.com:1521/ORCL", "HR", "hr123")) {
  
-            System.out.println("Java JDBC PostgreSQL Example");
+            System.out.println("Java JDBC Oracle Example");
             // When this class first attempts to establish a connection, it automatically loads any JDBC 4.0 drivers found within 
             // the class path. Note that your application must manually load any JDBC drivers prior to version 4.0.
 //          Class.forName("org.postgresql.Driver"); 
  
-            System.out.println("Connected to PostgreSQL database!");
+            System.out.println("Connected to Oracle database!");
             Statement statement = connection.createStatement();
             System.out.println("Reading log records...");
-            System.out.printf("%-30.30s  %-30.30s%n", "Tabla", "Operacion");
-            String query = "SELECT * FROM audit.bitacora where fecha_hora >= '" + refDate + "'";
+            System.out.printf("%-30.30s  %-30.30s%n", "Codigo", "Nombre");
+            String query = "SELECT * FROM jobs";
             ResultSet resultSet = statement.executeQuery(query);
             
             
             //Verificador de Sincornizacion
             if (resultSet.next()) {
                 do {
-                System.out.printf("%-30.30s  %-70.30s%n", resultSet.getString("tabla"), resultSet.getString("operacion"));
+                System.out.printf("%-30.30s  %-70.30s%n", resultSet.getString("JOB_ID"), resultSet.getString("JOB_TITLE"));
                 }while (resultSet.next());
             }else{
                 System.out.println("Las Tablas estan sincronizadas");
@@ -62,7 +100,6 @@ public class PruebadeConexionPG {
             System.out.println("Connection failure.");
             e.printStackTrace();
         }
-        
         
 //        try {
 //            //SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
