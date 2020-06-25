@@ -22,6 +22,7 @@ public class Main extends javax.swing.JFrame {
     public Main() {
         initComponents();
         ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
+        conDestino = new OracleDriver(this.txt_NombreInstacniaDestino, this.ORCL, this.txt_PuertoDestino, this.txt_UsuarioDestino, this.txt_ContraseniaDestino, txt_BitConexion);
         modelo_NoRep.addElement("Countries");
         modelo_NoRep.addElement("Departments");
         modelo_NoRep.addElement("Employees");
@@ -55,7 +56,7 @@ public class Main extends javax.swing.JFrame {
         txt_UsuarioOrigen = new javax.swing.JTextField();
         jLabel7 = new javax.swing.JLabel();
         txt_ContraseniaOrigen = new javax.swing.JTextField();
-        txt_NombreBDDestino = new javax.swing.JTextField();
+        ORCL = new javax.swing.JTextField();
         txt_PuertoDestino = new javax.swing.JTextField();
         txt_UsuarioDestino = new javax.swing.JTextField();
         txt_ContraseniaDestino = new javax.swing.JTextField();
@@ -100,7 +101,7 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Nombre Instancia");
 
-        txtx_NombreInstanciaOrigen.setText("database-1.ck0fj32e7uo3.us-east-1.rds.amazonaws.com ");
+        txtx_NombreInstanciaOrigen.setText("database-1.ck0fj32e7uo3.us-east-1.rds.amazonaws.com");
 
         jLabel4.setText("Nombre Bases de Datos");
 
@@ -118,7 +119,22 @@ public class Main extends javax.swing.JFrame {
 
         txt_ContraseniaOrigen.setText("waySecure1");
 
+        ORCL.setText("ORCL");
+
+        txt_PuertoDestino.setText("1521");
+
+        txt_UsuarioDestino.setText("hr");
+
+        txt_ContraseniaDestino.setText("hr123");
+
+        txt_NombreInstacniaDestino.setText("tbb2.c71kpjw2tb2c.us-east-1.rds.amazonaws.com");
+
         btn_GuardarConexion.setText("Guardar");
+        btn_GuardarConexion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btn_GuardarConexionMouseClicked(evt);
+            }
+        });
 
         btn_RegresarC.setText("Regresar");
         btn_RegresarC.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -223,7 +239,7 @@ public class Main extends javax.swing.JFrame {
                                         .addComponent(txt_UsuarioDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txt_ContraseniaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txt_NombreInstacniaDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(txt_NombreBDDestino, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(ORCL, javax.swing.GroupLayout.PREFERRED_SIZE, 281, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(jd_ConexionLayout.createSequentialGroup()
                                 .addComponent(jLabel13)
                                 .addGap(238, 238, 238))
@@ -276,7 +292,7 @@ public class Main extends javax.swing.JFrame {
                                 .addGap(41, 41, 41)
                                 .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(jLabel15)
-                                    .addComponent(txt_NombreBDDestino, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                    .addComponent(ORCL, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                         .addGap(30, 30, 30)
                         .addGroup(jd_ConexionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel5)
@@ -547,9 +563,10 @@ public class Main extends javax.swing.JFrame {
     private void btn_ProbarDestinoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProbarDestinoActionPerformed
         // VALIDAR CAMPOS VACIOS A DESTINATARIO
         try {
-            if (txt_NombreInstacniaDestino.getText().length() > 0 && txt_NombreBDDestino.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
+            if (txt_NombreInstacniaDestino.getText().length() > 0 && ORCL.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
                     && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0) {
-
+                conDestino.setIsPrueba(true);
+                conDestino.crearConexion();
             } else {
                 JOptionPane.showMessageDialog(null, "Faltan datos");
             }
@@ -616,6 +633,22 @@ public class Main extends javax.swing.JFrame {
         lst_Replicar.setModel(modelo_Rep);
     }//GEN-LAST:event_btn_CancelarActionPerformed
 
+    private void btn_GuardarConexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GuardarConexionMouseClicked
+        try {
+            if (txt_NombreInstacniaDestino.getText().length() > 0 && ORCL.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
+                    && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0 && txtx_NombreInstanciaOrigen.getText().length() > 0 && txt_NombreBDOrigen.getText().length() > 0 && txt_PuertoOrigen.getText().length() > 0
+                    && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0) {
+                ConOrigen.setIsPrueba(false);
+                ConOrigen.crearConexion();
+                conDestino.setIsPrueba(false);
+                conDestino.crearConexion();
+            } else {
+                JOptionPane.showMessageDialog(null, "Faltan datos");
+            }
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_btn_GuardarConexionMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -652,6 +685,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField ORCL;
     private javax.swing.JButton btn_AgregarTablaNOReplica;
     private javax.swing.JButton btn_AgregarTablaRepliaca;
     private javax.swing.JButton btn_Cancelar;
@@ -694,7 +728,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextArea txt_BitConexion;
     private javax.swing.JTextField txt_ContraseniaDestino;
     private javax.swing.JTextField txt_ContraseniaOrigen;
-    private javax.swing.JTextField txt_NombreBDDestino;
     private javax.swing.JTextField txt_NombreBDOrigen;
     private javax.swing.JTextField txt_NombreInstacniaDestino;
     private javax.swing.JTextField txt_PuertoDestino;
@@ -704,6 +737,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JTextField txtx_NombreInstanciaOrigen;
     // End of variables declaration//GEN-END:variables
     private PostgrDriver ConOrigen;
+    private OracleDriver conDestino;
     int seleccion1 = 0; //seleccion de no replicado
     int seleccion2 = 0; //seleccion de replicado
 
