@@ -25,9 +25,9 @@ public class PruebadeConexionPG {
      */
     public static void main(String[] args) {
         
-        String refDate = "2020-06-18 19:28:22.767";
-        
-//        PostgreSQL Driver
+//        String refDate = "2019-06-18 19:28:22.767";
+//        
+////        PostgreSQL Driver
 //        try (Connection connection = DriverManager.getConnection("jdbc:postgresql://database-1.ck0fj32e7uo3.us-east-1.rds.amazonaws.com:5432/HR", "postPower", "waySecure1")) {
 // 
 //            System.out.println("Java JDBC PostgreSQL Example");
@@ -76,27 +76,31 @@ public class PruebadeConexionPG {
             Statement statement = connection.createStatement();
             System.out.println("Reading log records...");
             System.out.printf("%-30.30s  %-30.30s%n", "Codigo", "Nombre");
-            String query = "SELECT * FROM jobs";
-            ResultSet resultSet = statement.executeQuery(query);
+          String query = "INSERT INTO hr.welcomes VALUES ('Bienvenido a la Bases de Datos de Destino - Oracle')";
+            
+            statement.executeUpdate(query);
+//
+//            String QUERY = "Select * from welcomes";
+//            ResultSet resultSet = statement.executeQuery(QUERY);
             
             
             //Verificador de Sincornizacion
-            if (resultSet.next()) {
-                do {
-                System.out.printf("%-30.30s  %-70.30s%n", resultSet.getString("JOB_ID"), resultSet.getString("JOB_TITLE"));
-                }while (resultSet.next());
-            }else{
-                System.out.println("Las Tablas estan sincronizadas");
-            }
+//            if (resultSet.next()) {
+//                do {
+//                System.out.printf("%-30.30s", resultSet.getString(1));
+//                }while (resultSet.next());
+//            }else{
+//                System.out.println("Las Tablas estan sincronizadas");
+//            }
             
             
             
             
  
-        } /*catch (ClassNotFoundException e) {
-            System.out.println("PostgreSQL JDBC driver not found.");
-            e.printStackTrace();
-        }*/ catch (SQLException e) {
+//        }catch (ClassNotFoundException e) {
+//            System.out.println("PostgreSQL JDBC driver not found.");
+//            e.printStackTrace();
+        } catch (SQLException e) {
             System.out.println("Connection failure.");
             e.printStackTrace();
         }
