@@ -6,6 +6,7 @@
 package Integrador;
 
 import java.util.ArrayList;
+import java.util.Date;
 import javax.swing.DefaultListModel;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -21,8 +22,8 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
-        ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion);
-        conDestino = new OracleDriver(this.txt_NombreInstacniaDestino, this.ORCL, this.txt_PuertoDestino, this.txt_UsuarioDestino, this.txt_ContraseniaDestino, txt_BitConexion);
+        ConOrigen = new PostgrDriver(this.txtx_NombreInstanciaOrigen, this.txt_NombreBDOrigen, this.txt_PuertoOrigen, this.txt_UsuarioOrigen, this.txt_ContraseniaOrigen, txt_BitConexion, txtA_Consola);
+        conDestino = new OracleDriver(this.txt_NombreInstacniaDestino, this.ORCL, this.txt_PuertoDestino, this.txt_UsuarioDestino, this.txt_ContraseniaDestino, txt_BitConexion, txtA_Consola);
         modelo_NoRep.addElement("Countries");
         modelo_NoRep.addElement("Departments");
         modelo_NoRep.addElement("Employees");
@@ -89,6 +90,7 @@ public class Main extends javax.swing.JFrame {
         btn_RegresarS = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtA_Consola = new javax.swing.JTextArea();
+        lbl_MarcaTiempo = new javax.swing.JLabel();
         lbl_Titulo = new javax.swing.JLabel();
         mb_Menu = new javax.swing.JMenuBar();
         mi_Integrador = new javax.swing.JMenu();
@@ -144,6 +146,7 @@ public class Main extends javax.swing.JFrame {
         });
 
         btn_Sincronizar.setText("Sincronizar");
+        btn_Sincronizar.setEnabled(false);
         btn_Sincronizar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_SincronizarMouseClicked(evt);
@@ -383,28 +386,6 @@ public class Main extends javax.swing.JFrame {
         jd_Integracion.getContentPane().setLayout(jd_IntegracionLayout);
         jd_IntegracionLayout.setHorizontalGroup(
             jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_IntegracionLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn_RegresarS)
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jd_IntegracionLayout.createSequentialGroup()
-                .addGap(40, 40, 40)
-                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jScrollPane3)
-                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jd_IntegracionLayout.createSequentialGroup()
-                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(86, 86, 86)
-                                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(btn_AgregarTablaNOReplica)
-                                    .addComponent(btn_AgregarTablaRepliaca)))
-                            .addComponent(jLabel9))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
-                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel10))))
-                .addGap(50, 50, 50))
             .addGroup(jd_IntegracionLayout.createSequentialGroup()
                 .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jd_IntegracionLayout.createSequentialGroup()
@@ -416,6 +397,31 @@ public class Main extends javax.swing.JFrame {
                         .addGap(185, 185, 185)
                         .addComponent(jLabel8)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                        .addComponent(lbl_MarcaTiempo)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btn_RegresarS)
+                        .addContainerGap())
+                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane3)
+                            .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jd_IntegracionLayout.createSequentialGroup()
+                                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(86, 86, 86)
+                                        .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(btn_AgregarTablaNOReplica)
+                                            .addComponent(btn_AgregarTablaRepliaca)))
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 106, Short.MAX_VALUE)
+                                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel10))))
+                        .addGap(50, 50, 50))))
         );
         jd_IntegracionLayout.setVerticalGroup(
             jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -445,7 +451,9 @@ public class Main extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btn_RegresarS)
+                .addGroup(jd_IntegracionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btn_RegresarS)
+                    .addComponent(lbl_MarcaTiempo))
                 .addContainerGap())
         );
 
@@ -513,15 +521,23 @@ public class Main extends javax.swing.JFrame {
     private void btn_RegresarCMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_RegresarCMouseClicked
         jd_Conexion.dispose();
         this.setVisible(true);
+        ConOrigen.cerrarConexion();
+        conDestino.cerrarConexion();
+        this.btn_GuardarConexion.setEnabled(true);
     }//GEN-LAST:event_btn_RegresarCMouseClicked
 
     private void btn_SincronizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SincronizarMouseClicked
-        jd_Conexion.dispose();
-        jd_Integracion.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        jd_Integracion.setResizable(false);
-        jd_Integracion.pack();
-        jd_Integracion.setLocationRelativeTo(this); //Setearlo despues de pack()
-        jd_Integracion.setVisible(true);
+        if (this.btn_Sincronizar.isEnabled()) {
+            jd_Conexion.dispose();
+            jd_Integracion.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+            jd_Integracion.setResizable(false);
+            jd_Integracion.pack();
+            jd_Integracion.setLocationRelativeTo(this); //Setearlo despues de pack()
+            jd_Integracion.setVisible(true);
+            if (ConOrigen.cargarMarcaDeTiempo()) {
+                lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
+            }
+        }   
     }//GEN-LAST:event_btn_SincronizarMouseClicked
 
     private void btn_RegresarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_RegresarSMouseClicked
@@ -540,10 +556,31 @@ public class Main extends javax.swing.JFrame {
         modelo_NoRep.addElement("Regions");
         lst_NoReplicar.setModel(modelo_NoRep);
         lst_Replicar.setModel(modelo_Rep);
+        this.btn_Sincronizar.setEnabled(false);
+        this.btn_GuardarConexion.setEnabled(true);
+        ConOrigen.cerrarConexion();
+        conDestino.cerrarConexion(); 
     }//GEN-LAST:event_btn_RegresarSMouseClicked
-
+ 
     private void btn_GuardarSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarSincronizacionActionPerformed
-        // TODO add your handling code here:
+        if (ConOrigen.obtenerDiferencias("")) {
+            boolean fallo = false;
+            ArrayList<String> diff = ConOrigen.getDiferencias();
+            for (String d : diff) {
+                if (!conDestino.generarCambios(d)) {
+                    fallo = true;
+                    break;
+                }
+            }
+            if (!fallo) {
+                ConOrigen.setRefDate(new Date());
+                lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
+                txtA_Consola.append("\nINFORMACION: Cambios realizados con exito en la base de datos de Destino");
+                txtA_Consola.append("\n---------------------------------------------------------------------------");
+                ConOrigen.guardarMarcaDeTiempo();
+            }
+            
+        }
     }//GEN-LAST:event_btn_GuardarSincronizacionActionPerformed
 
     private void btn_ProbarOrigenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_ProbarOrigenActionPerformed
@@ -634,18 +671,22 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_CancelarActionPerformed
 
     private void btn_GuardarConexionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_GuardarConexionMouseClicked
-        try {
-            if (txt_NombreInstacniaDestino.getText().length() > 0 && ORCL.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
-                    && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0 && txtx_NombreInstanciaOrigen.getText().length() > 0 && txt_NombreBDOrigen.getText().length() > 0 && txt_PuertoOrigen.getText().length() > 0
-                    && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0) {
-                ConOrigen.setIsPrueba(false);
-                ConOrigen.crearConexion();
-                conDestino.setIsPrueba(false);
-                conDestino.crearConexion();
-            } else {
-                JOptionPane.showMessageDialog(null, "Faltan datos");
+        if (this.btn_GuardarConexion.isEnabled()) {
+            try {
+                if (txt_NombreInstacniaDestino.getText().length() > 0 && ORCL.getText().length() > 0 && txt_PuertoDestino.getText().length() > 0
+                        && txt_UsuarioDestino.getText().length() > 0 && txt_ContraseniaDestino.getText().length() > 0 && txtx_NombreInstanciaOrigen.getText().length() > 0 && txt_NombreBDOrigen.getText().length() > 0 && txt_PuertoOrigen.getText().length() > 0
+                        && txt_UsuarioOrigen.getText().length() > 0 && txt_ContraseniaOrigen.getText().length() > 0) {
+                    ConOrigen.setIsPrueba(false);
+                    ConOrigen.crearConexion();
+                    conDestino.setIsPrueba(false);
+                    conDestino.crearConexion();
+                    this.btn_Sincronizar.setEnabled(true);
+                    this.btn_GuardarConexion.setEnabled(false);
+                } else {
+                    JOptionPane.showMessageDialog(null, "Faltan datos");
+                }
+            } catch (Exception e) {
             }
-        } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_GuardarConexionMouseClicked
 
@@ -718,6 +759,7 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JDialog jd_Conexion;
     private javax.swing.JDialog jd_Integracion;
+    private javax.swing.JLabel lbl_MarcaTiempo;
     private javax.swing.JLabel lbl_Titulo;
     private javax.swing.JList<String> lst_NoReplicar;
     private javax.swing.JList<String> lst_Replicar;

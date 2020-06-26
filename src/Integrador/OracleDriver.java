@@ -10,6 +10,8 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -19,18 +21,19 @@ import javax.swing.JTextField;
  */
 public class OracleDriver {
     private JTextField instancia, baseDeDatos, puerto, usuario, contrasenia;
-    private JTextArea bitacora;
+    private JTextArea bitacora, consola;
     private String cadenaConexion;
     private boolean isPrueba;
     private Connection connection;
 
-    public OracleDriver(JTextField instancia, JTextField baseDeDatos, JTextField puerto, JTextField usuario, JTextField contrasenia, JTextArea bitacora) {
+    public OracleDriver(JTextField instancia, JTextField baseDeDatos, JTextField puerto, JTextField usuario, JTextField contrasenia, JTextArea bitacora, JTextArea consola) {
         this.instancia = instancia;
         this.baseDeDatos = baseDeDatos;
         this.puerto = puerto;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.bitacora = bitacora;
+        this.consola = consola;
     }
     
     private void crearCadenaConexion(){
@@ -73,7 +76,7 @@ public class OracleDriver {
             if (!connection.isClosed()) {
                 connection.close();
                 if (!isPrueba) {
-                    bitacora.append("\nCerrando Conexion");
+                    bitacora.append("\nCerrando Conexion - Base de Datos Destino");
                     bitacora.append("\n---------------------------------------------------------------------------");
                 }
             }
@@ -82,6 +85,24 @@ public class OracleDriver {
             bitacora.append("ERROR: " + ex.getMessage() + ex.getCause().toString());
             bitacora.append("\n---------------------------------------------------------------------------");
         }
+    }
+    
+    public boolean generarCambios(String query){
+        try {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException ex) {
+            consola.append("ERROR: " + ex.getMessage() + ex.getCause().toString());
+            consola.append("\n---------------------------------------------------------------------------");
+            try {
+                connection.rollback();
+            } catch (SQLException ex1) {
+                consola.append("ERROR: " + ex.getMessage() + ex.getCause().toString());
+                consola.append("\n---------------------------------------------------------------------------");
+            }
+            return false;
+        }
+        return true;
     }
     
     public boolean isIsPrueba() {

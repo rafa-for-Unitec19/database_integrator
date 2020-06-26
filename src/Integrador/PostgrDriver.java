@@ -18,27 +18,30 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.TimeZone;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 public class PostgrDriver {
     private JTextField instancia, baseDeDatos, puerto, usuario, contrasenia;
-    private JTextArea bitacora;
+    private JTextArea bitacora, consola;
     private String cadenaConexion;
     private boolean isPrueba;
     private Connection connection;
     private ArrayList<String> diferencias;
     private Date refDate;
 
-    public PostgrDriver(JTextField instancia, JTextField baseDeDatos, JTextField puerto, JTextField usuario, JTextField contrasenia, JTextArea bitacora) {
+    public PostgrDriver(JTextField instancia, JTextField baseDeDatos, JTextField puerto, JTextField usuario, JTextField contrasenia, JTextArea bitacora, JTextArea consola) {
         this.instancia = instancia;
         this.baseDeDatos = baseDeDatos;
         this.puerto = puerto;
         this.usuario = usuario;
         this.contrasenia = contrasenia;
         this.bitacora = bitacora;
+        this.consola = consola;
     }
     
     private void crearCadenaConexion(){
@@ -81,18 +84,19 @@ public class PostgrDriver {
             if (!connection.isClosed()) {
                 connection.close();
                 if (!isPrueba) {
-                    bitacora.append("\nCerrando Conexion");
+                    bitacora.append("\nCerrando Conexion - Base de Datos Origen");
                     bitacora.append("\n---------------------------------------------------------------------------");
                 }
             }
         } catch (SQLException ex) {
             ex.printStackTrace();
-            bitacora.append("ERROR: " + ex.getMessage() + ex.getCause().toString());
+            bitacora.append("\nERROR: " + ex.getMessage() + ex.getCause().toString());
             bitacora.append("\n---------------------------------------------------------------------------");
         }
     }
     
     public boolean obtenerDiferencias(String condiciones){
+        diferencias = new ArrayList<>();
         String query = "SELECT * FROM audit.bitacora "+ obtenerCondicionTiempo() + condiciones;
         try {
             Statement statement = connection.createStatement();
@@ -101,30 +105,52 @@ public class PostgrDriver {
             //Verificador de Sincornizacion
             if (resultSet.next()) {
                 do {
-                    diferencias.add(resultSet.getString("operacion"));
+                    switch(resultSet.getString("accion")){
+                        case "I":
+                            consola.append("\nINFORMACION: Se ha encontrado una Insercion en la tabla: " + resultSet.getString("tabla"));
+                            consola.append("\n---------------------------------------------------------------------------");
+                            break;
+                        case "D":
+                            consola.append("\nINFORMACION: Se ha encontrado una Eliminacion en la tabla: " + resultSet.getString("tabla"));
+                            consola.append("\n---------------------------------------------------------------------------");
+                            break;
+                        case "U":
+                            consola.append("\nINFORMACION: Se ha encontrado una Actualizacion en la tabla: " + resultSet.getString("tabla"));
+                            consola.append("\n---------------------------------------------------------------------------");
+                            break;
+                    }
+                    String temp = resultSet.getString("operacion");
+                    temp = temp.replace(';', ' ');
+                    diferencias.add(temp);
                 } while (resultSet.next());
             } else {
-                bitacora.append("INFORMACION: Las Bases de Datos estan actualizadas");
-                bitacora.append("\n---------------------------------------------------------------------------");
+                consola.append("\nINFORMACION: Las Bases de Datos estan actualizadas");
+                consola.append("\n---------------------------------------------------------------------------");
+                return false;
             }
         } catch (SQLException ex) {
-            bitacora.append("ERROR: " + ex.getMessage() + ex.getCause().toString());
-            bitacora.append("\n---------------------------------------------------------------------------");
+            consola.append("\nERROR: " + ex.getMessage() + ex.getCause().toString());
+            consola.append("\n---------------------------------------------------------------------------");
             return false;
-        } finally {
-            cerrarConexion();
-        }
-        refDate = new Date();
+        } 
         return true;
     }
     
     private String obtenerCondicionTiempo(){
         if (cargarMarcaDeTiempo()) {
-            return "WHERE fecha_hora >= '" + refDate + "' ";
+            return "WHERE fecha_hora >= '" + getMarcaDeTimepo()+ "' ";
         }else{
-            return "WHERE ";
+            return "";
         }
         
+    }
+    
+    public String getMarcaDeTimepo(){
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+        dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        String timeStamp = dateFormat.format(refDate);
+        //System.out.println("Marca de tiempo format:" + timeStamp);
+        return timeStamp;
     }
     
     public boolean cargarMarcaDeTiempo(){
@@ -132,10 +158,11 @@ public class PostgrDriver {
         FileInputStream fis = null;
         DataInputStream entrada = null;
         try {
-            fis = new FileInputStream("/tiempo.raffles");
+            fis = new FileInputStream("./tiempo.raffles");
             entrada = new DataInputStream(fis);
             while (true) {   
                 refDate = new Date(entrada.readLong());
+                //System.out.println("Marca de Entrada:" + refDate.getTime());
             }
         } catch (FileNotFoundException e) {
             estado = false;
@@ -162,9 +189,10 @@ public class PostgrDriver {
         FileOutputStream fos = null;
         DataOutputStream salida = null;
         try {
-            fos = new FileOutputStream("/tiempo.raffles");
+            fos = new FileOutputStream("./tiempo.raffles");
             salida = new DataOutputStream(fos);
             salida.writeLong(refDate.getTime());
+            //System.out.println("Marca de Salida:" + refDate.getTime());
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
         } catch (IOException e) {
@@ -195,6 +223,11 @@ public class PostgrDriver {
         return diferencias;
     }
 
-    
-    
+    public Date getRefDate() {
+        return refDate;
+    }
+
+    public void setRefDate(Date refDate) {
+        this.refDate = refDate;
+    }
 }
