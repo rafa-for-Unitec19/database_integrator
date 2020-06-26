@@ -537,7 +537,8 @@ public class Main extends javax.swing.JFrame {
             if (ConOrigen.cargarMarcaDeTiempo()) {
                 lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
             }
-        }   
+        }
+
     }//GEN-LAST:event_btn_SincronizarMouseClicked
 
     private void btn_RegresarSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_RegresarSMouseClicked
@@ -559,9 +560,9 @@ public class Main extends javax.swing.JFrame {
         this.btn_Sincronizar.setEnabled(false);
         this.btn_GuardarConexion.setEnabled(true);
         ConOrigen.cerrarConexion();
-        conDestino.cerrarConexion(); 
+        conDestino.cerrarConexion();
     }//GEN-LAST:event_btn_RegresarSMouseClicked
- 
+
     private void btn_GuardarSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarSincronizacionActionPerformed
         if (ConOrigen.obtenerDiferencias("")) {
             boolean fallo = false;
@@ -579,7 +580,7 @@ public class Main extends javax.swing.JFrame {
                 txtA_Consola.append("\n---------------------------------------------------------------------------");
                 ConOrigen.guardarMarcaDeTiempo();
             }
-            
+
         }
     }//GEN-LAST:event_btn_GuardarSincronizacionActionPerformed
 
@@ -788,7 +789,9 @@ public class Main extends javax.swing.JFrame {
 
     public String CadenaReplicados() {
         String cadena = "";
-
+        for (int q = 0; q < modelo_Rep.getSize(); q++) {
+            modelo_Rep.getElementAt(q);
+        }
         return cadena;
     }
 }
