@@ -637,7 +637,7 @@ public class Main extends javax.swing.JFrame {
                 modelo_NoRep.remove(seleccion1);
 
             }
-
+            //CadenaReplicados();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_AgregarTablaRepliacaActionPerformed
@@ -651,6 +651,7 @@ public class Main extends javax.swing.JFrame {
                 modelo_Rep.remove(seleccion2);
 
             }
+            //CadenaReplicados();
         } catch (Exception e) {
         }
     }//GEN-LAST:event_btn_AgregarTablaNOReplicaActionPerformed
@@ -789,9 +790,22 @@ public class Main extends javax.swing.JFrame {
 
     public String CadenaReplicados() {
         String cadena = "";
+        ArrayList<String> lista_temp = new ArrayList();
+
+        //agregar todos los elementos de la lista al arraylist
         for (int q = 0; q < modelo_Rep.getSize(); q++) {
-            modelo_Rep.getElementAt(q);
+            lista_temp.add((String) modelo_Rep.getElementAt(q));
         }
+
+        for (int i = 0; i < lista_temp.size(); i++) {
+            if (i >= 1) {
+                cadena += " and " + lista_temp.get(i).toString();
+            } else {
+                cadena += lista_temp.get(i).toString();
+            }
+        }
+
+        System.out.println("CADENA ES: " + cadena);
         return cadena;
     }
 }
