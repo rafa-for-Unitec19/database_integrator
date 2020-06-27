@@ -524,6 +524,8 @@ public class Main extends javax.swing.JFrame {
         ConOrigen.cerrarConexion();
         conDestino.cerrarConexion();
         this.btn_GuardarConexion.setEnabled(true);
+        this.btn_ProbarOrigen.setEnabled(true);
+        this.btn_ProbarDestino.setEnabled(true);
     }//GEN-LAST:event_btn_RegresarCMouseClicked
 
     private void btn_SincronizarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_SincronizarMouseClicked
@@ -559,6 +561,8 @@ public class Main extends javax.swing.JFrame {
         lst_Replicar.setModel(modelo_Rep);
         this.btn_Sincronizar.setEnabled(false);
         this.btn_GuardarConexion.setEnabled(true);
+        this.btn_ProbarOrigen.setEnabled(true);
+        this.btn_ProbarDestino.setEnabled(true);
         ConOrigen.cerrarConexion();
         conDestino.cerrarConexion();
     }//GEN-LAST:event_btn_RegresarSMouseClicked
@@ -694,6 +698,8 @@ public class Main extends javax.swing.JFrame {
                     conDestino.crearConexion();
                     this.btn_Sincronizar.setEnabled(true);
                     this.btn_GuardarConexion.setEnabled(false);
+                    this.btn_ProbarOrigen.setEnabled(false);
+                    this.btn_ProbarDestino.setEnabled(false);
                 } else {
                     JOptionPane.showMessageDialog(null, "Faltan datos");
                 }
@@ -799,32 +805,6 @@ public class Main extends javax.swing.JFrame {
     DefaultListModel modelo_Rep = new DefaultListModel();
 
     public String CadenaReplicados(String tabla) {
-//        String cadena = "";
-//        ArrayList<String> lista_temp = new ArrayList();
-//
-//        //agregar todos los elementos de la lista al arraylist
-//        for (int q = 0; q < modelo_Rep.getSize(); q++) {
-//            String t = modelo_Rep.getElementAt(q).toString().toLowerCase();
-//            lista_temp.add(t);
-//        }
-//        
-//        boolean flag = ConOrigen.cargarMarcaDeTiempo();
-//        
-//        for (int i = 0; i < lista_temp.size(); i++) {
-//            if (i >= 1) {
-//                cadena += " OR tabla = '" + lista_temp.get(i).toString() + "'";
-//            }else {
-//                if (flag) {
-//                    cadena += "AND (tabla = '" + lista_temp.get(i).toString() + "'";
-//                }else{
-//                    cadena += "WHERE tabla = '" + lista_temp.get(i).toString() + "'";
-//                }
-//                
-//            }
-//            if(i == (lista_temp.size()-1) && flag){
-//                    cadena += ")";
-//            }
-//        }
         String cadena = "";
 
         if (ConOrigen.cargarMarcaDeTiempo() && ConOrigen.getTabla(tabla) != null) {

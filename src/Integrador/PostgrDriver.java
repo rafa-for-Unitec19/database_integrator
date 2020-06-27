@@ -165,8 +165,9 @@ public class PostgrDriver {
     
     public String getMarcaDeTimepo(String tabla){
         String timeStamp = "";
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
+        //dateFormat.
         TableTimeStamp temp = getTabla(tabla);
         if (temp == null) {
             return null;
@@ -261,7 +262,6 @@ public class PostgrDriver {
         }else{
             temp.setMarcaTiempo(timeStamp);
         }
-        
     }
     
     public TableTimeStamp getTabla(String tabla){
