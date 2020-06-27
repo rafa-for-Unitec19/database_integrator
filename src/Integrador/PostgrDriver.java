@@ -5,23 +5,25 @@
  */
 package Integrador;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
+
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.TimeZone;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -32,7 +34,8 @@ public class PostgrDriver {
     private boolean isPrueba;
     private Connection connection;
     private ArrayList<String> diferencias;
-    private Date refDate;
+    private ArrayList<TableTimeStamp> refDates = new ArrayList<>();
+    //private Date refDate;
 
     public PostgrDriver(JTextField instancia, JTextField baseDeDatos, JTextField puerto, JTextField usuario, JTextField contrasenia, JTextArea bitacora, JTextArea consola) {
         this.instancia = instancia;
@@ -42,6 +45,7 @@ public class PostgrDriver {
         this.contrasenia = contrasenia;
         this.bitacora = bitacora;
         this.consola = consola;
+        this.connection = null;
     }
     
     private void crearCadenaConexion(){
@@ -59,7 +63,6 @@ public class PostgrDriver {
             bitacora.append("\n" + resultSet.getString(1) + " - " + resultSet.getString(2));
             bitacora.append("\n---------------------------------------------------------------------------");
         }catch (SQLException ex) {
-            
             if (ex.getCause() == null) {
                 bitacora.append("\nERROR: " + ex.getMessage());
             }else{
@@ -81,23 +84,29 @@ public class PostgrDriver {
     
     public void cerrarConexion(){
         try {
-            if (!connection.isClosed()) {
-                connection.close();
-                if (!isPrueba) {
-                    bitacora.append("\nCerrando Conexion - Base de Datos Origen");
-                    bitacora.append("\n---------------------------------------------------------------------------");
+            if (connection != null) {
+                if (!connection.isClosed()) {
+                    connection.close();
+                    if (!isPrueba) {
+                        bitacora.append("\nCerrando Conexion - Base de Datos Origen");
+                        bitacora.append("\n---------------------------------------------------------------------------");
+                    }
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            bitacora.append("\nERROR: " + ex.getMessage() + ex.getCause().toString());
+            if (ex.getCause() == null) {
+                bitacora.append("\nERROR: " + ex.getMessage());
+            }else{
+                bitacora.append("\nERROR: " + ex.getMessage() + ex.getCause().toString());
+            }
             bitacora.append("\n---------------------------------------------------------------------------");
         }
     }
     
-    public boolean obtenerDiferencias(String condiciones){
+    public boolean obtenerDiferencias(String condiciones, String tabla){
         diferencias = new ArrayList<>();
-        String query = "SELECT * FROM audit.bitacora "+ obtenerCondicionTiempo() + condiciones;
+        String query = "SELECT * FROM audit.bitacora "+ obtenerCondicionTiempo(tabla) + condiciones;
+        System.out.println("Query generada:" + query);
         try {
             Statement statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
@@ -124,31 +133,46 @@ public class PostgrDriver {
                     diferencias.add(temp);
                 } while (resultSet.next());
             } else {
-                consola.append("\nINFORMACION: Las Bases de Datos estan actualizadas");
+                consola.append("\nINFORMACION: Las Bases de Datos estan actualizadas en la tabla: " + tabla);
                 consola.append("\n---------------------------------------------------------------------------");
                 return false;
             }
         } catch (SQLException ex) {
-            consola.append("\nERROR: " + ex.getMessage() + ex.getCause().toString());
+            if (ex.getCause() == null) {
+                consola.append("\nERROR: " + ex.getMessage());
+            }else{
+                consola.append("\nERROR: " + ex.getMessage() + ex.getCause().toString());
+            }
             consola.append("\n---------------------------------------------------------------------------");
             return false;
         } 
         return true;
     }
     
-    private String obtenerCondicionTiempo(){
+    private String obtenerCondicionTiempo(String tabla){
         if (cargarMarcaDeTiempo()) {
-            return "WHERE fecha_hora >= '" + getMarcaDeTimepo()+ "' ";
+            String temp = getMarcaDeTimepo(tabla);
+            if (temp != null) {
+                return "WHERE fecha_hora >= '" + temp + "' ";
+            }else{
+                return "";
+            }
         }else{
             return "";
         }
         
     }
     
-    public String getMarcaDeTimepo(){
+    public String getMarcaDeTimepo(String tabla){
+        String timeStamp = "";
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.SSS");
         dateFormat.setTimeZone(TimeZone.getTimeZone("GMT"));
-        String timeStamp = dateFormat.format(refDate);
+        TableTimeStamp temp = getTabla(tabla);
+        if (temp == null) {
+            return null;
+        }else{
+            timeStamp = dateFormat.format(temp.getMarcaTiempo());
+        }
         //System.out.println("Marca de tiempo format:" + timeStamp);
         return timeStamp;
     }
@@ -156,12 +180,12 @@ public class PostgrDriver {
     public boolean cargarMarcaDeTiempo(){
         boolean estado = true;
         FileInputStream fis = null;
-        DataInputStream entrada = null;
+        ObjectInputStream entrada = null;
         try {
             fis = new FileInputStream("./tiempo.raffles");
-            entrada = new DataInputStream(fis);
+            entrada = new ObjectInputStream(fis);
             while (true) {   
-                refDate = new Date(entrada.readLong());
+                refDates = (ArrayList<TableTimeStamp>) entrada.readObject();
                 //System.out.println("Marca de Entrada:" + refDate.getTime());
             }
         } catch (FileNotFoundException e) {
@@ -170,6 +194,8 @@ public class PostgrDriver {
             System.out.println("Fin de fichero");
         } catch (IOException e) {
             System.out.println(e.getMessage());
+        } catch (ClassNotFoundException ex) {
+            ex.printStackTrace();
         } finally {
             try {
                 if (fis != null) {
@@ -187,11 +213,12 @@ public class PostgrDriver {
     
     public void guardarMarcaDeTiempo(){
         FileOutputStream fos = null;
-        DataOutputStream salida = null;
+        ObjectOutputStream salida = null;
         try {
             fos = new FileOutputStream("./tiempo.raffles");
-            salida = new DataOutputStream(fos);
-            salida.writeLong(refDate.getTime());
+            salida = new ObjectOutputStream(fos);
+            
+            salida.writeObject(refDates);
             //System.out.println("Marca de Salida:" + refDate.getTime());
         } catch (FileNotFoundException e) {
             System.out.println(e.getMessage());
@@ -223,11 +250,27 @@ public class PostgrDriver {
         return diferencias;
     }
 
-    public Date getRefDate() {
-        return refDate;
+//    public Date getRefDate() {
+//        return refDate;
+//    }
+//
+    public void setRefDate(String tabla, Date timeStamp) {
+        TableTimeStamp temp = getTabla(tabla);
+        if (temp == null) {
+            refDates.add(new TableTimeStamp(tabla, timeStamp));
+        }else{
+            temp.setMarcaTiempo(timeStamp);
+        }
+        
     }
-
-    public void setRefDate(Date refDate) {
-        this.refDate = refDate;
+    
+    public TableTimeStamp getTabla(String tabla){
+        for (TableTimeStamp refDate : refDates) {
+            if (tabla.equals(refDate.getNombreTabla())) {
+                //refDate.setMarcaTiempo(timeStamp);
+                return refDate;
+            }
+        }
+        return null;
     }
 }

@@ -34,6 +34,7 @@ public class OracleDriver {
         this.contrasenia = contrasenia;
         this.bitacora = bitacora;
         this.consola = consola;
+        this.connection = null;
     }
     
     private void crearCadenaConexion(){
@@ -73,11 +74,13 @@ public class OracleDriver {
     
     public void cerrarConexion(){
         try {
-            if (!connection.isClosed()) {
-                connection.close();
-                if (!isPrueba) {
-                    bitacora.append("\nCerrando Conexion - Base de Datos Destino");
-                    bitacora.append("\n---------------------------------------------------------------------------");
+            if (connection != null) {
+                if (!connection.isClosed()) {
+                    connection.close();
+                    if (!isPrueba) {
+                        bitacora.append("\nCerrando Conexion - Base de Datos Destino");
+                        bitacora.append("\n---------------------------------------------------------------------------");
+                    }
                 }
             }
         } catch (SQLException ex) {

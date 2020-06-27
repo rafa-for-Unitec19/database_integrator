@@ -534,9 +534,9 @@ public class Main extends javax.swing.JFrame {
             jd_Integracion.pack();
             jd_Integracion.setLocationRelativeTo(this); //Setearlo despues de pack()
             jd_Integracion.setVisible(true);
-            if (ConOrigen.cargarMarcaDeTiempo()) {
-                lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
-            }
+//            if (ConOrigen.cargarMarcaDeTiempo()) {
+//                lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
+//            }
         }
 
     }//GEN-LAST:event_btn_SincronizarMouseClicked
@@ -564,23 +564,33 @@ public class Main extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_RegresarSMouseClicked
 
     private void btn_GuardarSincronizacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_GuardarSincronizacionActionPerformed
-        if (ConOrigen.obtenerDiferencias("")) {
-            boolean fallo = false;
-            ArrayList<String> diff = ConOrigen.getDiferencias();
-            for (String d : diff) {
-                if (!conDestino.generarCambios(d)) {
-                    fallo = true;
-                    break;
+        if (!modelo_Rep.isEmpty()) {
+            txtA_Consola.append("\n\nINFORMACION: Nueva Sincronizacion");
+            txtA_Consola.append("\n---------------------------------------------------------------------------");
+            for (int i = 0; i < modelo_Rep.size(); i++) {
+                String tempTable = modelo_Rep.get(i).toString().toLowerCase();
+                if (ConOrigen.obtenerDiferencias(CadenaReplicados(tempTable), tempTable)) {
+                    boolean fallo = false;
+                    ArrayList<String> diff = ConOrigen.getDiferencias();
+                    for (String d : diff) {
+                        if (!conDestino.generarCambios(d)) {
+                            fallo = true;
+                            break;
+                        }
+                    }
+                    if (!fallo) {
+                        ConOrigen.setRefDate(tempTable, new Date());
+                        //lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
+                        txtA_Consola.append("\nINFORMACION: Ultima actualizacion de la tabla " + tempTable + " :" + ConOrigen.getMarcaDeTimepo(tempTable));
+                        txtA_Consola.append("\n---------------------------------------------------------------------------");
+                        txtA_Consola.append("\nINFORMACION: Cambios realizados con exito en la base de datos de Destino");
+                        txtA_Consola.append("\n---------------------------------------------------------------------------");
+                        ConOrigen.guardarMarcaDeTiempo();
+                    }
                 }
             }
-            if (!fallo) {
-                ConOrigen.setRefDate(new Date());
-                lbl_MarcaTiempo.setText("Ultima Sincronizacion: " + ConOrigen.getMarcaDeTimepo());
-                txtA_Consola.append("\nINFORMACION: Cambios realizados con exito en la base de datos de Destino");
-                txtA_Consola.append("\n---------------------------------------------------------------------------");
-                ConOrigen.guardarMarcaDeTiempo();
-            }
-
+        }else{
+            JOptionPane.showMessageDialog(null, "No hay Tablas en la lista de Replicacion");
         }
     }//GEN-LAST:event_btn_GuardarSincronizacionActionPerformed
 
@@ -788,24 +798,41 @@ public class Main extends javax.swing.JFrame {
     DefaultListModel modelo_NoRep = new DefaultListModel();
     DefaultListModel modelo_Rep = new DefaultListModel();
 
-    public String CadenaReplicados() {
+    public String CadenaReplicados(String tabla) {
+//        String cadena = "";
+//        ArrayList<String> lista_temp = new ArrayList();
+//
+//        //agregar todos los elementos de la lista al arraylist
+//        for (int q = 0; q < modelo_Rep.getSize(); q++) {
+//            String t = modelo_Rep.getElementAt(q).toString().toLowerCase();
+//            lista_temp.add(t);
+//        }
+//        
+//        boolean flag = ConOrigen.cargarMarcaDeTiempo();
+//        
+//        for (int i = 0; i < lista_temp.size(); i++) {
+//            if (i >= 1) {
+//                cadena += " OR tabla = '" + lista_temp.get(i).toString() + "'";
+//            }else {
+//                if (flag) {
+//                    cadena += "AND (tabla = '" + lista_temp.get(i).toString() + "'";
+//                }else{
+//                    cadena += "WHERE tabla = '" + lista_temp.get(i).toString() + "'";
+//                }
+//                
+//            }
+//            if(i == (lista_temp.size()-1) && flag){
+//                    cadena += ")";
+//            }
+//        }
         String cadena = "";
-        ArrayList<String> lista_temp = new ArrayList();
 
-        //agregar todos los elementos de la lista al arraylist
-        for (int q = 0; q < modelo_Rep.getSize(); q++) {
-            lista_temp.add((String) modelo_Rep.getElementAt(q));
+        if (ConOrigen.cargarMarcaDeTiempo() && ConOrigen.getTabla(tabla) != null) {
+            cadena += "AND tabla = '" + tabla + "'";
+        } else {
+            cadena += "WHERE tabla = '" + tabla + "'";
         }
 
-        for (int i = 0; i < lista_temp.size(); i++) {
-            if (i >= 1) {
-                cadena += " and " + lista_temp.get(i).toString();
-            } else {
-                cadena += lista_temp.get(i).toString();
-            }
-        }
-
-        System.out.println("CADENA ES: " + cadena);
         return cadena;
     }
 }
